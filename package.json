@@ -2,8 +2,10 @@
   "name": "nodejs-file-manager",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "start:named": "node src/index.js --username=AnonimDeveloper",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/Syderi/nodejs-File-Manager.git"
   },
-  "author": "",
+  "author": "Eugeniy Kuzmin @Syderi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Syderi/nodejs-File-Manager/issues"
