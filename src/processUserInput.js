@@ -1,30 +1,23 @@
 import { rl } from './readline/createReadline.js';
-import { goodByeMessages } from './messages/goodByeMessages.js';
 import { currentPath } from './const/currentPath.js';
 import { logCurrentPath } from './messages/logCurrentPath.js';
+import { closeReadline } from './readline/closeReadline.js';
+import { SYSTEM_SLASH } from './const/systemSlash.js';
 
 // Функция для обработки ввода пользователя
-export function processUserInput(input) {
+export async function processUserInput(input) {
   const command = input.trim();
 
-  if (command === '.exit') {
-    goodByeMessages();
-    rl.close();
-    process.exit(0);
-  } else {
-    // Вывод остальных команд, пока не реализованы
-    currentPath.path = currentPath.path + '/1';
-    console.log(`\nInvalid input: ${command}`);
-  }
+  if (command === '.exit') closeReadline();
 
-  // Обработка выхода по нажатию Ctrl+C
-  rl.on('SIGINT', () => {
-    goodByeMessages();
-    rl.close();
-    process.exit(0);
-  });
+  currentPath.path = currentPath.path + `${SYSTEM_SLASH}1`;
+  console.log(`\nInvalid input: ${command}`);
 
   logCurrentPath();
-  rl.setPrompt('\nEnter a command: ');
   rl.prompt();
 }
+
+// Обработка выхода по нажатию Ctrl+C
+rl.on('SIGINT', () => {
+  closeReadline();
+});
