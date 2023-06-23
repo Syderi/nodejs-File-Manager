@@ -2,6 +2,7 @@ import { ERRORS_MESSAGESS } from '../const/const.js';
 import { up } from './up.js';
 import { cd } from './cd.js';
 import { logDirectoryInfo } from './logDirectoryInfo.js';
+import { cat } from './cat.js';
 
 export async function commandDistributor(command) {
   const key = command.split(' ')[0].trim();
@@ -17,6 +18,9 @@ export async function commandDistributor(command) {
       break;
     case 'ls':
       await logDirectoryInfo();
+      break;
+    case 'cat':
+      await cat(arg);
       break;
 
     default:

@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "start:named": "node src/index.js --username=AnonimDeveloper",
+    "start:named": "node src/index.js --username=Anonim_Developer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
