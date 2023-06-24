@@ -5,12 +5,11 @@ import { logDirectoryInfo } from './logDirectoryInfo.js';
 import { cat } from './cat.js';
 import { addFile } from './addFile.js';
 import { renameFile } from './renameFile.js';
+import { copyFile } from './copyFile.js';
 
 export async function switchCommandDistributor(command) {
   const key = command.split(' ')[0].trim();
   const arg = command.slice(key.length).trim();
-  // console.log(key, key.length);
-  // console.log(arg, arg.length);
   switch (key) {
     case 'up':
       up();
@@ -29,6 +28,12 @@ export async function switchCommandDistributor(command) {
       break;
     case 'rn':
       await renameFile(arg);
+      break;
+    case 'cp':
+      await copyFile(arg);
+      break;
+    case 'mv':
+      await copyFile(arg, 'move');
       break;
 
     default:

@@ -6,7 +6,7 @@ import { isFileAccessible } from '../helper_utils/isFileAccessible.js';
 import { isDirectory } from '../helper_utils/isDirectory.js';
 
 export async function renameFile(arg) {
-  const [filePathArg, newNameArg] = arg.split(' ').map((el) => el.trim());
+  const [filePathArg, newNameArg] = arg.split(' ').map((el) => el.trim().replace(/['"`]/g, ''));
 
   if (!filePathArg || !newNameArg) {
     throw new Error(ERRORS_MESSAGESS.operationFailed);
@@ -24,13 +24,13 @@ export async function renameFile(arg) {
   const checkIsOldFile = await isFileAccessible(absoluteOldPath);
   const checkIsNewFile = await isFileAccessible(absoluteNewPath);
   const checkIsDirectory = await isDirectory(workDirectory);
-  const extensionNewFile = extname(newNameArg);
+  const checkExtensionNewFile = extname(newNameArg);
 
   if (
     checkIsOldFile &&
     checkIsDirectory &&
     !checkIsNewFile &&
-    extensionNewFile !== ''
+    checkExtensionNewFile !== ''
   ) {
     try {
       await rename(absoluteOldPath, absoluteNewPath);
