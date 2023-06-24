@@ -6,13 +6,14 @@ import { rl } from '../readline/createReadline.js';
 import { ERRORS_MESSAGESS } from '../const/const.js';
 
 export async function cat(inputPath) {
-  return new Promise((resolve, reject) => {
-    let catPath = join(currentPath.path, inputPath);
-    if (isAbsolute(inputPath)) {
-      catPath = inputPath;
-    }
+  let catPath = join(currentPath.path, inputPath);
+  if (isAbsolute(inputPath)) {
+    catPath = inputPath;
+  }
+  const checkIsFile = await isFileAccessible(catPath);
 
-    if (isFileAccessible(catPath)) {
+  return new Promise((resolve, reject) => {
+    if (checkIsFile) {
       const rs = createReadStream(catPath);
       rs.on('data', (data) => rl.output.write(data));
       rs.on('error', (error) => {

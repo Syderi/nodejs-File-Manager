@@ -1,7 +1,7 @@
 import { rl } from './readline/createReadline.js';
 import { logCurrentPath } from './messages/logCurrentPath.js';
 import { closeReadline } from './readline/closeReadline.js';
-import { commandDistributor } from './commandDistributor/commandDistributor.js';
+import { switchCommandDistributor } from './commandDistributor/switchCommandDistributor.js';
 
 // Функция для обработки ввода пользователя
 export async function processUserInput(input) {
@@ -10,7 +10,7 @@ export async function processUserInput(input) {
   if (command === '.exit') closeReadline();
 
   try {
-    await commandDistributor(command);
+    await switchCommandDistributor(command);
   } catch (error) {
     console.error(error.message);
   }

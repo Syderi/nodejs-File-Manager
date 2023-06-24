@@ -3,8 +3,9 @@ import { up } from './up.js';
 import { cd } from './cd.js';
 import { logDirectoryInfo } from './logDirectoryInfo.js';
 import { cat } from './cat.js';
+import { addFile } from './addFile.js';
 
-export async function commandDistributor(command) {
+export async function switchCommandDistributor(command) {
   const key = command.split(' ')[0].trim();
   const arg = command.slice(key.length).trim();
   // console.log(key, key.length);
@@ -21,6 +22,9 @@ export async function commandDistributor(command) {
       break;
     case 'cat':
       await cat(arg);
+      break;
+    case 'add':
+      await addFile(arg);
       break;
 
     default:
