@@ -4,6 +4,7 @@ import { cd } from './cd.js';
 import { logDirectoryInfo } from './logDirectoryInfo.js';
 import { cat } from './cat.js';
 import { addFile } from './addFile.js';
+import { renameFile } from './renameFile.js';
 
 export async function switchCommandDistributor(command) {
   const key = command.split(' ')[0].trim();
@@ -25,6 +26,9 @@ export async function switchCommandDistributor(command) {
       break;
     case 'add':
       await addFile(arg);
+      break;
+    case 'rn':
+      await renameFile(arg);
       break;
 
     default:
