@@ -47,7 +47,7 @@ export async function copyFile(arg, key = 'copy') {
     !checkIsFileWrite &&
     checkIsReadPathDirectory &&
     checkIsWritePathDirectory &&
-    checkExtensionNewFile
+    checkExtensionNewFile !== ''
   ) {
     return new Promise((resolve, reject) => {
       const readStream = createReadStream(absoluteReadPathFile);
@@ -61,14 +61,13 @@ export async function copyFile(arg, key = 'copy') {
       });
 
       writeStream.on('finish', async () => {
-        if ((key === 'move')) {
+        if (key === 'move') {
           try {
             await unlink(absoluteReadPathFile);
           } catch (error) {
             throw new Error(ERRORS_MESSAGESS.operationFailed);
           }
         }
-        // После успешной записи файла, удаляем исходный файл
         resolve();
       });
 
