@@ -17,7 +17,7 @@ export async function cd(inputPath) {
     if (await isDirectory(inputPath)) {
       currentPath.path = inputPath.slice(0, -1);
     } else {
-      throw new Error(ERRORS_MESSAGESS.operationFailed);
+      throw new Error(ERRORS_MESSAGESS.invalidInput);
     }
     return;
   }
@@ -25,7 +25,7 @@ export async function cd(inputPath) {
   if (await isDirectory(newPath)) {
     currentPath.path = newPath.slice(0, -1);
   } else {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 }
 

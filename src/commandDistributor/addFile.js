@@ -9,10 +9,10 @@ export async function addFile(fileName) {
   const checkIsFile = await isFileAccessible(filePath);
 
   if (checkIsFile) {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
   if (extname(fileName) === '') {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 
   try {

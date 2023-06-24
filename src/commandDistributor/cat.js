@@ -23,7 +23,7 @@ export async function cat(inputPath) {
         resolve(); // Разрешить промис, когда чтение завершено
       });
     } else {
-      reject(new Error(ERRORS_MESSAGESS.operationFailed));
+      reject(new Error(ERRORS_MESSAGESS.invalidInput));
     }
   });
 }

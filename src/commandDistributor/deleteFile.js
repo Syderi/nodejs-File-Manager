@@ -9,7 +9,7 @@ export async function deleteFile(arg) {
   const filePathArg = arg.replace(/['"`]/g, '');
 
   if (!filePathArg) {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 
   let absolutePathFile = join(currentPath.path, filePathArg);
@@ -32,6 +32,6 @@ export async function deleteFile(arg) {
       throw new Error(ERRORS_MESSAGESS.operationFailed);
     }
   } else {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 }

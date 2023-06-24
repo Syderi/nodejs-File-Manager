@@ -12,7 +12,7 @@ export async function copyFile(arg, key = 'copy') {
     .map((el) => el.trim().replace(/['"`]/g, ''));
 
   if (!pathToReadFile || !pathToWriteDirectory) {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 
   let absoluteReadPathFile = join(currentPath.path, pathToReadFile);
@@ -74,6 +74,6 @@ export async function copyFile(arg, key = 'copy') {
       readStream.pipe(writeStream);
     });
   } else {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 }

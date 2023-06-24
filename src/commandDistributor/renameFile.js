@@ -9,7 +9,7 @@ export async function renameFile(arg) {
   const [filePathArg, newNameArg] = arg.split(' ').map((el) => el.trim().replace(/['"`]/g, ''));
 
   if (!filePathArg || !newNameArg) {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 
   let absoluteOldPath = join(currentPath.path, filePathArg);
@@ -38,6 +38,6 @@ export async function renameFile(arg) {
       throw new Error(ERRORS_MESSAGESS.operationFailed);
     }
   } else {
-    throw new Error(ERRORS_MESSAGESS.operationFailed);
+    throw new Error(ERRORS_MESSAGESS.invalidInput);
   }
 }
