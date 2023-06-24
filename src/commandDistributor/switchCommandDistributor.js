@@ -7,6 +7,7 @@ import { addFile } from './addFile.js';
 import { renameFile } from './renameFile.js';
 import { copyFile } from './copyFile.js';
 import { deleteFile } from './deleteFile.js';
+import { osInformation } from './osInformation.js';
 
 export async function switchCommandDistributor(command) {
   const key = command.split(' ')[0].trim();
@@ -38,6 +39,9 @@ export async function switchCommandDistributor(command) {
       break;
     case 'rm':
       await deleteFile(arg);
+      break;
+    case 'os':
+      await osInformation(arg);
       break;
 
     default:
