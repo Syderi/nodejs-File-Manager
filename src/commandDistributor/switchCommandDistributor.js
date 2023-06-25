@@ -9,6 +9,8 @@ import { copyFile } from './copyFile.js';
 import { deleteFile } from './deleteFile.js';
 import { osInformation } from './osInformation.js';
 import { hash } from './hash.js';
+import { compress } from './compress.js';
+import { decompress } from './decompress.js';
 
 export async function switchCommandDistributor(command) {
   const key = command.split(' ')[0].trim();
@@ -46,6 +48,12 @@ export async function switchCommandDistributor(command) {
       break;
     case 'hash':
       await hash(arg);
+      break;
+    case 'compress':
+      await compress(arg);
+      break;
+    case 'decompress':
+      await decompress(arg);
       break;
 
     default:
