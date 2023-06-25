@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'fs';
-import { join, extname, isAbsolute, dirname, basename, parse } from 'path';
+import { join, extname, isAbsolute, dirname, basename } from 'path';
 import { ERRORS_MESSAGESS } from '../const/const.js';
 import { currentPath } from '../const/currentPath.js';
 import { isFileAccessible } from '../helper_utils/isFileAccessible.js';
@@ -8,7 +8,7 @@ import { createBrotliCompress } from 'zlib';
 
 // compress C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager\a.txt C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager
 
-export async function compress(arg, key = 'copy') {
+export async function compress(arg) {
   const [pathToReadFile, pathToWriteDirectory] = arg
     .split(' ')
     .map((el) => el.trim().replace(/['"`]/g, ''));
@@ -30,21 +30,13 @@ export async function compress(arg, key = 'copy') {
     absoluteWritePathDirectory = pathToWriteDirectory;
   }
 
-  const { name: nameWritePathFile } = parse(absoluteReadPathFile);
-
   const absoluteWritePathFile = join(
     absoluteWritePathDirectory,
-    `${nameWritePathFile}.br`
+    `${fileReadName}.br`
   );
-
-  console.log('absoluteReadPathFile===', absoluteReadPathFile);
-  console.log('absoluteWritePathFile===', absoluteWritePathFile);
 
   const readPathDirectory = dirname(absoluteReadPathFile);
   const writePathDirectory = absoluteWritePathDirectory;
-
-  console.log('readPathDirectory===', readPathDirectory);
-  console.log('writePathDirectory===', writePathDirectory);
 
   const checkIsFileRead = await isFileAccessible(absoluteReadPathFile);
   const checkIsFileWrite = await isFileAccessible(absoluteWritePathFile);
@@ -59,18 +51,20 @@ export async function compress(arg, key = 'copy') {
     checkIsWritePathDirectory &&
     checkExtensionFileReadName !== ''
   ) {
-    try {
-      const readStream = createReadStream(absoluteReadPathFile);
-      const writeStream = createWriteStream(absoluteWritePathFile);
-      const compressStream = createBrotliCompress();
-      readStream.pipe(compressStream).pipe(writeStream);
+    const readStream = createReadStream(absoluteReadPathFile);
+    const writeStream = createWriteStream(absoluteWritePathFile);
+    const compressStream = createBrotliCompress();
 
-      await new Promise((resolve, reject) => {
-        writeStream.on('finish', resolve());
-        writeStream.on('error', reject());
-      });
+    const compressionPromise = new Promise((resolve, reject) => {
+      writeStream.on('finish', resolve());
+      writeStream.on('error', reject());
+      compressStream.on('error', reject());
+    });
+
+    readStream.pipe(compressStream).pipe(writeStream);
+    try {
+      await compressionPromise;
     } catch (error) {
-      console.log(error)
       throw new Error(ERRORS_MESSAGESS.operationFailed);
     }
   } else {
