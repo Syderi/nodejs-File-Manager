@@ -5,13 +5,12 @@ import { currentPath } from '../const/currentPath.js';
 import { isFileAccessible } from '../helper_utils/isFileAccessible.js';
 import { isDirectory } from '../helper_utils/isDirectory.js';
 import { createBrotliCompress } from 'zlib';
+import { splitArguments } from '../helper_utils/splitArguments.js';
 
 // compress C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager\a.txt C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager
 
 export async function compress(arg) {
-  const [pathToReadFile, pathToWriteDirectory] = arg
-    .split(' ')
-    .map((el) => el.trim().replace(/['"`]/g, ''));
+  const [pathToReadFile, pathToWriteDirectory] = splitArguments(arg);
 
   if (!pathToReadFile || !pathToWriteDirectory) {
     throw new Error(ERRORS_MESSAGESS.invalidInput);

@@ -5,11 +5,10 @@ import { ERRORS_MESSAGESS } from '../const/const.js';
 import { currentPath } from '../const/currentPath.js';
 import { isFileAccessible } from '../helper_utils/isFileAccessible.js';
 import { isDirectory } from '../helper_utils/isDirectory.js';
+import { splitArguments } from '../helper_utils/splitArguments.js';
 
 export async function copyFile(arg, key = 'copy') {
-  const [pathToReadFile, pathToWriteDirectory] = arg
-    .split(' ')
-    .map((el) => el.trim().replace(/['"`]/g, ''));
+  const [pathToReadFile, pathToWriteDirectory] = splitArguments(arg);
 
   if (!pathToReadFile || !pathToWriteDirectory) {
     throw new Error(ERRORS_MESSAGESS.invalidInput);

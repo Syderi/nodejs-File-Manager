@@ -5,13 +5,12 @@ import { currentPath } from '../const/currentPath.js';
 import { isFileAccessible } from '../helper_utils/isFileAccessible.js';
 import { isDirectory } from '../helper_utils/isDirectory.js';
 import { createBrotliDecompress } from 'zlib';
+import { splitArguments } from '../helper_utils/splitArguments.js';
 
 // decompress C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager\a.txt.br C:\Users\SuperVisor\Desktop\FileNode\nodejs-File-Manager
 
 export async function decompress(arg) {
-  const [pathToReadFile, pathToWriteDirectory] = arg
-    .split(' ')
-    .map((el) => el.trim().replace(/['"`]/g, ''));
+  const [pathToReadFile, pathToWriteDirectory] = splitArguments(arg);
 
   if (!pathToReadFile || !pathToWriteDirectory) {
     throw new Error(ERRORS_MESSAGESS.invalidInput);
